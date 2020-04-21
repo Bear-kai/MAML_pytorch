@@ -8,6 +8,7 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 2. pytorch 1.0+
 
 ## files & dirs
+
 1. encoder.py
 
     模型定义文件，需要手动定义支持参数传递的`forward()`函数，更换模型时这个过程得重新进行一遍，此外须手动设置BN的running statistics，代码迁移性差
@@ -28,19 +29,32 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 
     经过若干尝试，目前仅实现对于VGG类串行网络结构的普适代码，对于ResNet这类含分支的网络结构，需要手动重构其build block [[一个不太简洁的示例](https://github.com/AntreasAntoniou/HowToTrainYourMAMLPytorch/blob/master/meta_neural_network_architectures.py)]，使支持带参数的前向传播 （pytorch框架可能不支持本文对模型普适的需求，欢迎讨论交流`xiongkai4925@cvte.com` / `bearkai1992@qq.com`）
 
-5. test_grad_20200408.py
+5. reptile.py
+
+    简洁的reptile实现，reptile的伪代码如下：
+    
+        Initialize parameter vector $\phi$
+        **for** iteration 1,2,3,\dots **do**
+            Randomly sample a task T
+            Perform k>1 steps of SGD on task T, starting with parameters $\phi$, resulting in parameters $W$
+            Update: $\phi + \epsilon (W-\phi)$
+        end for
+        **Return** $\phi$
+    
+
+6. test_grad_20200408.py
 
     编写的一些tiny_test，帮助理解pytorch的`backward()`和`grad()`, `.data`和.`detach()`, `retain_graph`和`create_graph`等概念，帮助验证MAML一阶/二阶梯度更新中的一些操作是否符合预期。
 
     若只需要实现MAML梯度更新，可以忽略该文件。
 
-6. test_param_20191016.md
+7. test_param_20191016.md
 
     编写的一些tiny_test，帮助理解pytorch的参数更新机制，并排查实现深度随机策略时的bug。
 
     若只需要实现MAML梯度更新，可以忽略该文件。对pytorch框架感兴趣的同学，建议阅读文件最后的总结内容。
 
-7. discard_scripts
+8. discard_scripts
 
     一些失败的尝试，涉及`hook_function`, `name_modules()`等概念；若只需要实现MAML梯度更新，可以忽略该文件。
 
@@ -50,5 +64,5 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 
 
 ## To do 
-Reptile [[1](https://arxiv.org/abs/1803.02999)[, 2](https://openai.com/blog/reptile/#jump)]  and training tricks of MAML [[3](https://arxiv.org/abs/1810.09502)]
+~~Reptile [[1](https://arxiv.org/abs/1803.02999)[, 2](https://openai.com/blog/reptile/#jump)]~~  and training tricks of MAML [[3](https://arxiv.org/abs/1810.09502)]
 
