@@ -10,7 +10,7 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 ## files & dirs
 1. encoder.py
 
-    模型定义文件，需要手动定义支持参数传递的`forward()`函数，更换模型时这个过程得重新进行一遍，代码迁移性差
+    模型定义文件，需要手动定义支持参数传递的`forward()`函数，更换模型时这个过程得重新进行一遍，此外须手动设置BN的running stastics，代码迁移性差
 
 2. encoder_general.py
 
@@ -26,7 +26,7 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 
     本文最初目的是实现普适版的MAML二阶更新代码，普适是指对于任意模型结构，在不用修改原模型定义文件，或者仅需要添加一个类函数的前提下，即可方便地将MAML二阶更新用于该模型;
 
-    经过若干尝试，目前仅实现对于VGG类串行网络结构的普适代码，无法直接迁移到ResNet这类含分支的网络结构上，对ResNet需要重构其build block，使支持带参数的前向传播 （pytorch框架可能不支持本文对模型普适的需求，欢迎讨论交流`xiongkai4925@cvte.com` / `bearkai1992@qq.com`）
+    经过若干尝试，目前仅实现对于VGG类串行网络结构的普适代码，对于ResNet这类含分支的网络结构，需要手动重构其build block [[一个不太简洁的示例](https://github.com/AntreasAntoniou/HowToTrainYourMAMLPytorch/blob/master/meta_neural_network_architectures.py)]，使支持带参数的前向传播 （pytorch框架可能不支持本文对模型普适的需求，欢迎讨论交流`xiongkai4925@cvte.com` / `bearkai1992@qq.com`）
 
 5. test_grad_20200408.py
 
