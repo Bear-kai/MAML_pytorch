@@ -50,5 +50,5 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 
 
 ## To do 
-Reptile [[1](https://arxiv.org/abs/1803.02999)[, 2](https://openai.com/blog/reptile/#jump)]  and training tricks of MAML.
+Reptile [[1](https://arxiv.org/abs/1803.02999)[, 2](https://openai.com/blog/reptile/#jump)]  and training tricks of MAML [[3](https://arxiv.org/abs/1810.09502)]
 
