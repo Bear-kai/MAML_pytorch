@@ -10,7 +10,7 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 ## files & dirs
 1. encoder.py
 
-    模型定义文件，需要手动定义支持参数传递的`forward()`函数，更换模型时这个过程得重新进行一遍，此外须手动设置BN的running stastics，代码迁移性差
+    模型定义文件，需要手动定义支持参数传递的`forward()`函数，更换模型时这个过程得重新进行一遍，此外须手动设置BN的running statistics，代码迁移性差
 
 2. encoder_general.py
 
