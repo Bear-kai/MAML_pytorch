@@ -34,7 +34,7 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 
     若只需要实现MAML梯度更新，可以忽略该文件。
 
-6. test_param_20191016.py
+6. test_param_20191016.md
 
     编写的一些tiny_test，帮助理解pytorch的参数更新机制，并排查实现深度随机策略时的bug。
 
