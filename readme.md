@@ -10,11 +10,11 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 ## files & dirs
 1. encoder.py
 
-    模型定义文件，需要手动定义指定参数的前向传播函数（见`forward()`函数），更换模型时这个过程得重新进行一遍，代码迁移性差
+    模型定义文件，需要手动定义支持参数传递的`forward()`函数，更换模型时这个过程得重新进行一遍，代码迁移性差
 
 2. encoder_general.py
 
-    相对普适的模型定义文件，迁移性稍好，更换模型时不用从零开始定义指定参数的前向传播函数，目前仅适于VGG类串行网络结构
+    相对普适的模型定义文件，迁移性稍好，更换模型时不用从零开始定义支持参数传递的`forward()`函数，目前仅适于VGG类串行网络结构
 
 3. **MAML_1st.py**
 
@@ -24,11 +24,9 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 
     相对普适的MAML二阶版实现（基于手动更新网络参数）; 通过设置参数，可退化为`MAML_1st.py`中的一阶版近似;
 
-    目前github上的第三方开源实现，有的并未实现二阶梯度更新，有的实现繁琐、代码迁移性差，主要表现在基于指定参数的前向传播这部分（对应inner_update中的`encoder.forward_net(x, fast_weights)`）
+    本文最初目的是实现普适版的MAML二阶更新代码，普适是指对于任意模型结构，在不用修改原模型定义文件，或者仅需要添加一个类函数的前提下，即可方便地将MAML二阶更新用于该模型;
 
-    本文最初目的是实现普适版的MAML二阶更新代码，普适是指对于任意模型结构，在不用修改原模型定义文件，或者仅需要添加一个类函数的前提下，即可方便地将MAML二阶更新代码用于该模型;
-
-    经过若干尝试，目前仅实现对于VGG类串行网络结构的普适代码，无法直接迁移到ResNet这类含分支的网络结构上，问题的根源在于上述提到的inner_update中的指定参数前向传播。（pytorch框架可能无法实现这种普适的代码，欢迎讨论交流`xiongkai4925@cvte.com` / `bearkai1992@qq.com`）
+    经过若干尝试，目前仅实现对于VGG类串行网络结构的普适代码，无法直接迁移到ResNet这类含分支的网络结构上，对ResNet需要重构其build block，使支持带参数的前向传播 （pytorch框架可能不支持本文对模型普适的需求，欢迎讨论交流`xiongkai4925@cvte.com` / `bearkai1992@qq.com`）
 
 5. test_grad_20200408.py
 
@@ -48,9 +46,9 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 
 ## Note
 1. 上述实现普适版MAML二阶，更多是为了研究上的完备性，顺便加深对深度框架的理解；
-2. 实际上，对于小模型，参考`encoder.py`重新定义模型的`forward()`，工作量也还好，对于大模型，其实也用不到二阶梯度更新，因为太占内存，速度太慢。因此，可重点关注**MAML_1st.py**。
+2. 实际上，对于小模型，参考`encoder.py`重新定义模型的`forward()`，工作量较小，对于大模型，比如`ResNet50`，需要重构其build block，使能进行指定参数的前向传播，此外大模型可能不太用到二阶梯度更新，因为Hessian矩阵太占内存，计算速度太慢。
 
 
 ## To do 
-    Reptile and training tricks of MAML.
+Reptile [[1](https://arxiv.org/abs/1803.02999)[, 2](https://openai.com/blog/reptile/#jump)]  and training tricks of MAML.
 
