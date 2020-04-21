@@ -33,13 +33,13 @@ For Official Tensorflow Implementation, please visit [Here](https://github.com/c
 
     简洁的reptile实现，reptile的伪代码如下：
     
-        Initialize parameter vector $\phi$
-        **for** iteration 1,2,3,\dots **do**
+        Init param W
+        for iteration 1,2,3,... do
             Randomly sample a task T
-            Perform k>1 steps of SGD on task T, starting with parameters $\phi$, resulting in parameters $W$
-            Update: $\phi + \epsilon (W-\phi)$
+            Perform k>1 steps of SGD on task T, starting with W, resulting in W1
+            Update: W := W + lr*(W1-W)
         end for
-        **Return** $\phi$
+        Return W
     
 
 6. test_grad_20200408.py
