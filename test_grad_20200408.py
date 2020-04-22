@@ -13,10 +13,10 @@ def tiny_test_1():
     # x = torch.tensor([1.,2.],requires_grad=True)
     # y = x.pow(2) + 1
     # z = 0.5*y
-    # loss_1 = z.mean()
-    # loss_2 = z.sum()
-    # sum_loss = loss_1 + loss_2
-    # sum_loss.backward()
+    # loss_1 = z.mean()         
+    # loss_2 = z.sum()              # 下面将sum_loss换成loss_1不影响梯度计算，因sum_loss不是叶子节点
+    # sum_loss = loss_1 + loss_2    # loss_1 = loss_1 +loss_2
+    # sum_loss.backward()           # loss_1.backward()
     # print(x.grad)
     
     # a = torch.tensor([1.,2.],requires_grad=True)
@@ -156,8 +156,8 @@ def tiny_test_2():
     z = y.sum()
     z.backward(create_graph=True)        
     print(x.grad)                        # tensor([2., 4.], grad_fn=<CloneBackward>)
-    x = x - 0.1 * x.grad                 # 构建graph时不能采用同名变量! 执行完该句后，x.grad=None, x.grad_fn为SubBackward0, x.is_leaf=False
-    L = 2*x + 1                          # 对于网络参数值的更新，因为变量名是要保持不变的，为了保持is_leaf，所以optimizer.step中是基于.data计算
+    x = x - 0.1 * x.grad                 # 【构建graph时叶子节点不能采用同名变量】执行完该句后，x.grad=None, x.grad_fn为SubBackward0, x.is_leaf=False
+    L = 2*x + 1                          # 联系网络参数值的更新，因为变量名要保持不变（保持is_leaf），所以optimizer.step中只能是基于.data计算
     # x.grad = torch.tensor([0.4,0.4])   
     L.sum().backward() 
     print(x.grad)                        # 因x不是leaf，故L反传后x.grad=None
