@@ -38,7 +38,7 @@ For a good tutorial of meta learning (with tensorflow), [see HERE](https://githu
         Init param W
         for iteration 1,2,3,... do
             Randomly sample a task T
-            Perform k>1 steps of SGD on task T, starting with W, resulting in W1
+            Perform k>1 steps of SGD on different minibatches of task T, starting with W, resulting in W1
             Update: W := W + lr*(W1-W)
         end for
         Return W

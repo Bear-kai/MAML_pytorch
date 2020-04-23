@@ -73,14 +73,18 @@ def main():
         device=torch.device("cpu")
 
     model.train()
-    # MAML的一个task包含Dtr和Dte, reptile的一个task只有Dtr（即没有了inputs_2,labels_2）
+    
+    # meta optimization
     for i in range(META_TRAIN_ITER):  
+        print('===== outer_iter: %d'%i)
         weights_before = deepcopy(model.state_dict())   
         
-        # base learner (inner update) 
-        inputs_1, labels_1 = get_random_data(device)    
+        # base learner (inner update), sample task_i
         for j in range(INNER_UPDATE_NUM):
-            pred_1  = model(inputs_1)
+            print('inner_iter: %d'%j)
+            # different minibatches of task_i
+            inputs_1, labels_1 = get_random_data(device)   
+            pred_1  = model(inputs_1)   
             loss_1 = loss_fn(pred_1, labels_1)
             optimizer_in.zero_grad()
             loss_1.backward()              
